@@ -1,9 +1,8 @@
-/*purpose==>Ability to retrieve salary data for a particular employee as well as all employees who have joined in a particular data range from the payroll service database
-* 	 - Use SELECT salary FROM employee_payroll WHERE name = 'Bill’ Query to View Bill’s salary
-*	 - Use Select query with Where condition View employees between start dates
-*        - Query: WHERE start BETWEEN CAST('2018-01-01 AS DATE) AND DATE(NOW());
-*        - Note: Where Condition Clause is used to retrieve the row needed from the table
-*        - Note: Use of Database Functions like CAST() and NOW() in the Query
+/*purpose==>Ability to add Gender to Employee Payroll Table and Update the Rows to reflect the correct Employee Gender
+* 	    - Use payroll_service database in MSSQL Client
+*           - Use Alter Table Command to add Field gender after the name field
+*           - Use Update Query to set the gender using where condition with the employee name
+*           - E.g. UPDATE employee_payroll set gender = 'M' where name = 'Bill' or name ='Charlie';
 *Author==>Sushmitha
 *Signin==>14-09-2022
 */
@@ -96,9 +95,9 @@ SELECT * FROM employee_payroll;
 +----+----------+----------+------------+
 3 rows in set (0.00 sec)
 
-*************************************************************************************************************
-//UC5==>
-*************************************************************************************************************
+***********************************************************************************************************************************************************************
+//UC5==>Ability to retrieve salary data for a particular employee as well as all employees who have joined in a particular data range from the payroll service database
+***********************************************************************************************************************************************************************
 
 mysql> SELECT * FROM employee_payroll
     -> WHERE name = 'Sushmitha';
@@ -109,8 +108,44 @@ mysql> SELECT * FROM employee_payroll
 +----+-----------+----------+------------+
 1 row in set (0.00 sec)
 
+*****************************************************************************************************************
+//UC6==>Ability to add Gender to Employee Payroll Table and Update the Rows to reflect the correct Employee Gender
+******************************************************************************************************************
 mysql> SELECT salary FROM employee_payroll
     -> WHERE name = 'thasvika';
 Empty set (0.00 sec)
 
-mysql>
+mysql>mysql> ALTER TABLE employee_payroll
+    -> ADD Gender varchar(255);
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+mysql> update employee_payroll set gender = 'Female' where name = 'Sushmitha';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update employee_payroll set gender = 'Female' where name = 'akhila';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update employee_payroll set gender = 'male' where name = 'divakar';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM employee_payroll;
++----+-----------+----------+------------+--------+
+| id | name      | salary   | start      | Gender |
++----+-----------+----------+------------+--------+
+|  1 | Sushmitha | 10000000 | 2022-09-14 | Female |
+|  2 | akhila    | 10000000 | 2022-09-15 | Female |
+|  3 | divakar   | 10000000 | 2022-09-26 | male   |
+|  4 | Santhosh  | 30000000 | 2022-05-22 | NULL   |
+|  5 | Aravind   | 10000000 | 2022-05-25 | NULL   |
++----+-----------+----------+------------+--------+
+5 rows in set (0.00 sec)
+
+
+
+
+
+
+
