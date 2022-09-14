@@ -1,8 +1,7 @@
-/*purpose==>Ability to add Gender to Employee Payroll Table and Update the Rows to reflect the correct Employee Gender
-* 	    - Use payroll_service database in MSSQL Client
-*           - Use Alter Table Command to add Field gender after the name field
-*           - Use Update Query to set the gender using where condition with the employee name
-*           - E.g. UPDATE employee_payroll set gender = 'M' where name = 'Bill' or name ='Charlie';
+/*purpose==>Ability to add Gender to Employee Payroll Table and Update the Rows to reflect the correct Employee Gender Use payroll_service database in MSSQL Client
+		- Use Alter Table Command to add Field gender after the name field
+		- Use Update Query to set the gender using where condition with the employee name
+		- E.g. UPDATE employee_payroll set gender ='M' where name = 'Bill' or name ='Charlie';
 *Author==>Sushmitha
 *Signin==>14-09-2022
 */
