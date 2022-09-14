@@ -1,6 +1,4 @@
-/*purpose==>Ability to extend employee_payroll data to store employee information like employee phone, address and department 
-*	   - Ensure employee department is non nullable fields.
-*	   - Add Default Value for address field.
+/*purpose==>Ability to extend employee_payroll table to have  Basic Pay, Deductions, Taxable Pay, Income Tax, Net Pay
 *Author==>Sushmitha
 *Signin==>14-09-2022
 */
@@ -355,7 +353,76 @@ mysql> select * from employee_payroll;
 +----+-----------+-------------+------------+-----------+------------+--------+
 5 rows in set (0.00 sec)
 
+***********************************************************************************************
+//UC9==> Ability to extend employee_payroll table to have  Basic Pay, Deductions, Taxable Pay, Income Tax, Net Pay
+************************************************************************************************
+
+
+mysql>  select * from employee_payroll;
++----+-----------+-------------+------------+-----------+------------+--------+
+| id | name      | PhoneNumber | Address    | salary    | start      | Gender |
++----+-----------+-------------+------------+-----------+------------+--------+
+|  1 | Sushmitha | 8317503102  | Hyderbad   | 500000000 | 2022-09-14 | Female |
+|  2 | akhila    | 7236483102  | Warngal    |  10000000 | 2022-09-15 | Female |
+|  3 | divakar   | 9876543210  | hanmakonda |  10000000 | 2022-09-26 | male   |
+|  4 | Santhosh  | 4567893210  | Delhi      |  30000000 | 2022-05-22 | NULL   |
+|  5 | Aravind   | 4321567890  | Banglore   |  10000000 | 2022-05-25 | NULL   |
++----+-----------+-------------+------------+-----------+------------+--------+
+5 rows in set (0.00 sec)
+
+mysql> alter table employee_payroll drop salary;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql>  select * from employee_payroll;
++----+-----------+-------------+------------+------------+--------+
+| id | name      | PhoneNumber | Address    | start      | Gender |
++----+-----------+-------------+------------+------------+--------+
+|  1 | Sushmitha | 8317503102  | Hyderbad   | 2022-09-14 | Female |
+|  2 | akhila    | 7236483102  | Warngal    | 2022-09-15 | Female |
+|  3 | divakar   | 9876543210  | hanmakonda | 2022-09-26 | male   |
+|  4 | Santhosh  | 4567893210  | Delhi      | 2022-05-22 | NULL   |
+|  5 | Aravind   | 4321567890  | Banglore   | 2022-05-25 | NULL   |
++----+-----------+-------------+------------+------------+--------+
+5 rows in set (0.00 sec)
+
+mysql>  alter table employee_payroll add basic_pay float(10) not null default '5000000'after name;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table employee_payroll add deductions float(10) not null default '780000'after basic_pay;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table employee_payroll add taxable_pay float(10) not null default '877000'after deductions;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql>  alter table employee_payroll add income_tax float(10) not null default '20000'after taxable_pay;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table employee_payroll add net_pay float(10) not null default '6540000'after income_tax;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql>  select * from employee_payroll;
++----+-----------+-----------+------------+-------------+------------+---------+-------------+------------+------------+--------+
+| id | name      | basic_pay | deductions | taxable_pay | income_tax | net_pay | PhoneNumber | Address    | start      | Gender |
++----+-----------+-----------+------------+-------------+------------+---------+-------------+------------+------------+--------+
+|  1 | Sushmitha |   5000000 |      60000 |      877000 |      20000 | 6540000 | 8317503102  | Hyderbad   | 2022-09-14 | Female |
+|  2 | akhila    |   5000000 |      60000 |      877000 |      20000 | 6540000 | 7236483102  | Warngal    | 2022-09-15 | Female |
+|  3 | divakar   |   5000000 |      60000 |      877000 |      20000 | 6540000 | 9876543210  | hanmakonda | 2022-09-26 | male   |
+|  4 | Santhosh  |   5000000 |      60000 |      877000 |      20000 | 6540000 | 4567893210  | Delhi      | 2022-05-22 | NULL   |
+|  5 | Aravind   |   5000000 |      60000 |      877000 |      20000 | 6540000 | 4321567890  | Banglore   | 2022-05-25 | NULL   |
++----+-----------+-----------+------------+-------------+------------+---------+-------------+------------+------------+--------+
+5 rows in set (0.00 sec)
+
 mysql>
+
+
+
+
 
 
 
