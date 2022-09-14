@@ -1,7 +1,6 @@
-/*purpose==>Ability to find sum, average, min, max and number of male and female employees Use payroll_service database in MSSQL Client
-	   - Use Database Function SUM, AVG, MIN, MAX, COUNT to do analysis by Male or Female.
-           - Note: You will need to use GROUP BY GENDER grouping to get the result
-	   - E.g. SELECT SUM(salary) FROM employee_payroll WHERE gender = 'F' GROUP BY gender;
+/*purpose==>Ability to extend employee_payroll data to store employee information like employee phone, address and department 
+*	   - Ensure employee department is non nullable fields.
+*	   - Add Default Value for address field.
 *Author==>Sushmitha
 *Signin==>14-09-2022
 */
@@ -114,7 +113,7 @@ mysql> SELECT salary FROM employee_payroll
     -> WHERE name = 'thasvika';
 Empty set (0.00 sec)
 
-mysql>mysql> ALTER TABLE employee_payroll
+mysql> ALTER TABLE employee_payroll
     -> ADD Gender varchar(255);
 Query OK, 0 rows affected (0.03 sec)
 Records: 0  Duplicates: 0  Warnings: 0
@@ -226,7 +225,141 @@ mysql> SELECT gender, COUNT(name) FROM employee_payroll GROUP BY gender;
 +--------+-------------+
 3 rows in set (0.00 sec)
 
+************************************************************************************************************************
+//UC8==>Ability to extend employee_payroll data to store employee information like employee phone, address and department 
+************************************************************************************************************************
+
+mysql> select * from employee_payroll;
++----+-----------+-----------+------------+--------+
+| id | name      | salary    | start      | Gender |
++----+-----------+-----------+------------+--------+
+|  1 | Sushmitha | 500000000 | 2022-09-14 | Female |
+|  2 | akhila    |  10000000 | 2022-09-15 | Female |
+|  3 | divakar   |  10000000 | 2022-09-26 | male   |
+|  4 | Santhosh  |  30000000 | 2022-05-22 | NULL   |
+|  5 | Aravind   |  10000000 | 2022-05-25 | NULL   |
++----+-----------+-----------+------------+--------+
+5 rows in set (0.00 sec)
+
+mysql>  ALTER TABLE employee_payroll
+    -> ADD PhoneNumber varchar(255)
+    -> after name;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql>  select * from employee_payroll;
++----+-----------+-------------+-----------+------------+--------+
+| id | name      | PhoneNumber | salary    | start      | Gender |
++----+-----------+-------------+-----------+------------+--------+
+|  1 | Sushmitha | NULL        | 500000000 | 2022-09-14 | Female |
+|  2 | akhila    | NULL        |  10000000 | 2022-09-15 | Female |
+|  3 | divakar   | NULL        |  10000000 | 2022-09-26 | male   |
+|  4 | Santhosh  | NULL        |  30000000 | 2022-05-22 | NULL   |
+|  5 | Aravind   | NULL        |  10000000 | 2022-05-25 | NULL   |
++----+-----------+-------------+-----------+------------+--------+
+5 rows in set (0.00 sec)
+
+mysql> update employee_payroll set phone_number='8317503102'where name='Sushmitha';
+ERROR 1054 (42S22): Unknown column 'phone_number' in 'field list'
+mysql> update employee_payroll set phonenumber='8317503102'where name='Sushmitha';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from employee_payroll;
++----+-----------+-------------+-----------+------------+--------+
+| id | name      | PhoneNumber | salary    | start      | Gender |
++----+-----------+-------------+-----------+------------+--------+
+|  1 | Sushmitha | 8317503102  | 500000000 | 2022-09-14 | Female |
+|  2 | akhila    | NULL        |  10000000 | 2022-09-15 | Female |
+|  3 | divakar   | NULL        |  10000000 | 2022-09-26 | male   |
+|  4 | Santhosh  | NULL        |  30000000 | 2022-05-22 | NULL   |
+|  5 | Aravind   | NULL        |  10000000 | 2022-05-25 | NULL   |
++----+-----------+-------------+-----------+------------+--------+
+5 rows in set (0.00 sec)
+
+mysql> update employee_payroll set phonenumber='7236483102'where name='akhila';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update employee_payroll set phonenumber='9876543210'where name='divakar';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update employee_payroll set phonenumber='4567893210'where name='Santhosh';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update employee_payroll set phonenumber='4321567890'where name='Aravind';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from employee_payroll;
++----+-----------+-------------+-----------+------------+--------+
+| id | name      | PhoneNumber | salary    | start      | Gender |
++----+-----------+-------------+-----------+------------+--------+
+|  1 | Sushmitha | 8317503102  | 500000000 | 2022-09-14 | Female |
+|  2 | akhila    | 7236483102  |  10000000 | 2022-09-15 | Female |
+|  3 | divakar   | 9876543210  |  10000000 | 2022-09-26 | male   |
+|  4 | Santhosh  | 4567893210  |  30000000 | 2022-05-22 | NULL   |
+|  5 | Aravind   | 4321567890  |  10000000 | 2022-05-25 | NULL   |
++----+-----------+-------------+-----------+------------+--------+
+5 rows in set (0.00 sec)
+
+mysql>  ALTER TABLE employee_payroll
+    -> ADD Address varchar(255)
+    -> after PhoneNumber;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from employee_payroll;
++----+-----------+-------------+---------+-----------+------------+--------+
+| id | name      | PhoneNumber | Address | salary    | start      | Gender |
++----+-----------+-------------+---------+-----------+------------+--------+
+|  1 | Sushmitha | 8317503102  | NULL    | 500000000 | 2022-09-14 | Female |
+|  2 | akhila    | 7236483102  | NULL    |  10000000 | 2022-09-15 | Female |
+|  3 | divakar   | 9876543210  | NULL    |  10000000 | 2022-09-26 | male   |
+|  4 | Santhosh  | 4567893210  | NULL    |  30000000 | 2022-05-22 | NULL   |
+|  5 | Aravind   | 4321567890  | NULL    |  10000000 | 2022-05-25 | NULL   |
++----+-----------+-------------+---------+-----------+------------+--------+
+5 rows in set (0.00 sec)
+
+mysql> update employee_payroll set Address='Hyderbad'where name='Sushmitha';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update employee_payroll set Address='Warngal'where name='akhila';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update employee_payroll set Address='hanmakonda'where name='divakar';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update employee_payroll set Address='Banglore'where name='Aravind';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update employee_payroll set Address='Delhi'where name='Santhosh';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from employee_payroll;
++----+-----------+-------------+------------+-----------+------------+--------+
+| id | name      | PhoneNumber | Address    | salary    | start      | Gender |
++----+-----------+-------------+------------+-----------+------------+--------+
+|  1 | Sushmitha | 8317503102  | Hyderbad   | 500000000 | 2022-09-14 | Female |
+|  2 | akhila    | 7236483102  | Warngal    |  10000000 | 2022-09-15 | Female |
+|  3 | divakar   | 9876543210  | hanmakonda |  10000000 | 2022-09-26 | male   |
+|  4 | Santhosh  | 4567893210  | Delhi      |  30000000 | 2022-05-22 | NULL   |
+|  5 | Aravind   | 4321567890  | Banglore   |  10000000 | 2022-05-25 | NULL   |
++----+-----------+-------------+------------+-----------+------------+--------+
+5 rows in set (0.00 sec)
+
 mysql>
+
+
+
+
 
 
 
