@@ -1,8 +1,7 @@
-/*purpose==>Ability to add Gender to Employee Payroll Table and Update the Rows to reflect the correct Employee Gender
-* 	    - Use payroll_service database in MSSQL Client
-*           - Use Alter Table Command to add Field gender after the name field
-*           - Use Update Query to set the gender using where condition with the employee name
-*           - E.g. UPDATE employee_payroll set gender = 'M' where name = 'Bill' or name ='Charlie';
+/*purpose==>Ability to find sum, average, min, max and number of male and female employees Use payroll_service database in MSSQL Client
+	   - Use Database Function SUM, AVG, MIN, MAX, COUNT to do analysis by Male or Female.
+           - Note: You will need to use GROUP BY GENDER grouping to get the result
+	   - E.g. SELECT SUM(salary) FROM employee_payroll WHERE gender = 'F' GROUP BY gender;
 *Author==>Sushmitha
 *Signin==>14-09-2022
 */
@@ -108,7 +107,7 @@ mysql> SELECT * FROM employee_payroll
 +----+-----------+----------+------------+
 1 row in set (0.00 sec)
 
-*****************************************************************************************************************
+******************************************************************************************************************
 //UC6==>Ability to add Gender to Employee Payroll Table and Update the Rows to reflect the correct Employee Gender
 ******************************************************************************************************************
 mysql> SELECT salary FROM employee_payroll
@@ -143,7 +142,91 @@ mysql> SELECT * FROM employee_payroll;
 +----+-----------+----------+------------+--------+
 5 rows in set (0.00 sec)
 
+***********************************************************************************************************************************
+//UC7==>Ability to find sum, average, min, max and number of male and female employees Use payroll_service database in MSSQL Client
+***********************************************************************************************************************************
 
+mysql> SELECT SUM(salary) FROM employee_payroll
+    -> WHERE gender = 'M' GROUP BY gender;
+Empty set (0.00 sec)
+
+mysql> WHERE gender = 'male' GROUP BY gender;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WHERE gender = 'male' GROUP BY gender' at line 1
+mysql> SELECT SUM(salary) FROM employee_payroll
+    -> WHERE gender = 'male' GROUP BY gender;
++-------------+
+| SUM(salary) |
++-------------+
+|    10000000 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT MIN(salary) FROM employee_payroll
+    -> WHERE gender = 'Female' GROUP BY gender;
++-------------+
+| MIN(salary) |
++-------------+
+|    10000000 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT SUM(salary) FROM employee_payroll
+    -> WHERE gender = 'male' GROUP BY gender;
++-------------+
+| SUM(salary) |
++-------------+
+|    10000000 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT MIN(salary) FROM employee_payroll
+    -> WHERE gender = 'male' GROUP BY gender;
++-------------+
+| MIN(salary) |
++-------------+
+|    10000000 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT AVG(salary) FROM employee_payroll
+    -> WHERE gender = 'male' GROUP BY gender;
++-------------+
+| AVG(salary) |
++-------------+
+|    10000000 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT AVG(salary) FROM employee_payroll
+    -> WHERE gender = 'Female' GROUP BY gender;
++-------------+
+| AVG(salary) |
++-------------+
+|   255000000 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT gender, AVG(salary) FROM employee_payroll GROUP BY gender;
++--------+-------------+
+| gender | AVG(salary) |
++--------+-------------+
+| Female |   255000000 |
+| male   |    10000000 |
+| NULL   |    20000000 |
++--------+-------------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT gender, COUNT(name) FROM employee_payroll GROUP BY gender;
++--------+-------------+
+| gender | COUNT(name) |
++--------+-------------+
+| Female |           2 |
+| male   |           1 |
+| NULL   |           2 |
++--------+-------------+
+3 rows in set (0.00 sec)
+
+mysql>
 
 
 
