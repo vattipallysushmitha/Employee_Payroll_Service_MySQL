@@ -1,6 +1,9 @@
-/*purpose==>Ability to retrieve all the employee payroll data that is added to payroll service database
-* 	  - Use payroll_service database in MSSQL Client
-*          - Use SELECT * FROM employee_payroll to retrieve all the data from the employee_payroll table
+/*purpose==>Ability to retrieve salary data for a particular employee as well as all employees who have joined in a particular data range from the payroll service database
+* 	 - Use SELECT salary FROM employee_payroll WHERE name = 'Bill’ Query to View Bill’s salary
+*	 - Use Select query with Where condition View employees between start dates
+*        - Query: WHERE start BETWEEN CAST('2018-01-01 AS DATE) AND DATE(NOW());
+*        - Note: Where Condition Clause is used to retrieve the row needed from the table
+*        - Note: Use of Database Functions like CAST() and NOW() in the Query
 *Author==>Sushmitha
 *Signin==>14-09-2022
 */
@@ -83,7 +86,7 @@ Query OK, 3 rows affected (0.11 sec)
 *************************************************************************************************************
 
 Records: 3  Duplicates: 0  Warnings: 0
-SELECT * FROM employee_payroll2;
+SELECT * FROM employee_payroll;
 +----+----------+----------+------------+
 | id | name     | salary   | start      |
 +----+----------+----------+------------+
@@ -92,3 +95,22 @@ SELECT * FROM employee_payroll2;
 |  3 | divakar  | 10000000 | 2022-09-26 |
 +----+----------+----------+------------+
 3 rows in set (0.00 sec)
+
+*************************************************************************************************************
+//UC5==>
+*************************************************************************************************************
+
+mysql> SELECT * FROM employee_payroll
+    -> WHERE name = 'Sushmitha';
++----+-----------+----------+------------+
+| id | name      | salary   | start      |
++----+-----------+----------+------------+
+|  1 | Sushmitha | 10000000 | 2022-09-14 |
++----+-----------+----------+------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT salary FROM employee_payroll
+    -> WHERE name = 'thasvika';
+Empty set (0.00 sec)
+
+mysql>
