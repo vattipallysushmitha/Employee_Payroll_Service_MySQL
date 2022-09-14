@@ -1,8 +1,6 @@
-/*purpose==>Ability to create a employee payroll table in the payroll service database to manage employee payrolls
-*         - Use payroll_service database in MSSQL Client
-*         - Use Create Table employee_payroll Query to create employee payroll table with columns id, name, salary and start date as column. Note Id is set to auto increment.
-*	  - Understand the SQL data types to be used for the table
-*          - Note: SQL Queries as case insensitive
+/*purpose==>Ability to create employeepayroll data in the payroll service database as part of CRUD Operation
+* 	  - Use payroll_service database in MSSQL Client
+*	  - Use INSERT INTO employee_payroll Query to create employees payroll data into the employee_payroll table
 *Author==>Sushmitha
 *Signin==>14-09-2022
 */
@@ -71,4 +69,12 @@ mysql> describe employee_payroll;
 +--------+--------------+------+-----+---------+----------------+
 4 rows in set (0.02 sec)
 
-
+*************************************************************************************************************
+//UC3==>Ability to create employeepayroll data in the payroll service database as part of CRUD Operation
+*************************************************************************************************************
+INSERT INTO employee_payroll2 ( name, salary, start) VALUES
+    -> ('Sushmitha', 10000000.00, '2022-09-14'),
+    ->  ('akhila', 10000000.00, '2022-09-15'),
+    -> ('divakar', 10000000.00, '2022-09-26');
+Query OK, 3 rows affected (0.11 sec)
+Records: 3  Duplicates: 0  Warnings: 0
